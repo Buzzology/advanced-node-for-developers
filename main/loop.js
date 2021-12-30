@@ -1,5 +1,6 @@
 // node myFile.js
 
+
 const pendingTimers = [];
 const pendingOSTasks = [];
 const pendingOperations = [];
@@ -20,7 +21,7 @@ function shouldContinue() {
 while(shouldContinue) {
     // 1) Node loops at pendingTimers and sees if any functions are ready to be called. settimeout, setInterval
 
-    // 2) Node looks pending osTaks and pending operations and calls relevant callbacks.
+    // 2) Node looks pending osTasks and pending operations and calls relevant callbacks.
 
     // 3) Pause execution. Continue when...
     // - a new pendingOSTask is done
