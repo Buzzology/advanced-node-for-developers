@@ -22,8 +22,12 @@ mongoose.Query.prototype.exec = async function() {
 
     // If we do, return that.
     if(cacheValue){
-        console.log(`CACHED: ${cacheValue}`);
-        return JSON.parse(cacheValue);
+
+        // Parse the redis string value.
+        const doc = JSON.parse(cacheVale);
+
+        // If it's an array we need to parse each element, otherwise just the single entity.
+        return Array.isArray(doc) ? doc.map(d => this.model(d)) : new this.model(doc);
     }
 
     // Otherwise, issue the query and store the result in redis.
