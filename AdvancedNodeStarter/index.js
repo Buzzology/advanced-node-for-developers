@@ -21,6 +21,8 @@ app.use(
     keys: [keys.cookieKey]
   })
 );
+
+// Used to handle authentication in the application. Uses oauth via google.
 app.use(passport.initialize());
 app.use(passport.session());
 
