@@ -1,21 +1,16 @@
-const puppeteer = require('puppeteer');
-const sessionFactory = require('./factories/sessionFactory');
-const userFactory = require('./factories/userFactory');
+const Page = require('./helpers/page');
 
-let browser, page;
+let page;
 
 // Runs before each test.
-beforeEach(async () => {
-    browser = await puppeteer.launch({
-        headless: false,
-    });
-    page = await browser.newPage();
+beforeEach(async () => {    
+    page = await Page.build();
     await page.goto('localhost:3000');
 })
 
 // Runs after each test.
 afterEach(async () => {
-    await browser.close();
+    await page.close();
 })
 
 test('Adds two numbers', () => {
@@ -25,7 +20,7 @@ test('Adds two numbers', () => {
 })
 
 test('the header has the correct text', async () => {
-    const text = await page.$eval('a.brand-logo', el => el.innerHTML);
+    const text = await page.getContentsOf('a.brand-logo');
 
     expect(text).toEqual('Blogster');
 })
@@ -37,14 +32,8 @@ test('clicking login starts oauth flow', async () => {
     expect(url).toMatch(/accounts\.google\.com/);
 })
 
-test('When signed in, shows logout button', async () => {
-    const user = await userFactory();
-    const { session, sig } = sessionFactory(user);
-
-    // Set the cookies for the current page so that we're authenticated.
-    await page.setCookie({ name: 'session', value: session });
-    await page.setCookie({ name: 'session.sig', value: sig });
-    await page.goto('localhost:3000');
+test('When signed in, shows logout button', async () => {    
+    await page.login();
 
     // Ensure that we're logged in by seeing if 'logout' is shown.
     await page.waitFor('a[href="/auth/logout"]');
