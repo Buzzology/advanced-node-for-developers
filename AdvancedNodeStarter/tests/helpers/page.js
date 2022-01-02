@@ -29,14 +29,14 @@ class CustomPage {
         this.browser.close();
     }
 
-    async login() {
+    async login(redirectUri = 'localhost:3000') {
         const user = await userFactory();
         const { session, sig } = sessionFactory(user);
 
         // Set the cookies for the current page so that we're authenticated.
         await this.page.setCookie({ name: 'session', value: session });
         await this.page.setCookie({ name: 'session.sig', value: sig });
-        await this.page.goto('localhost:3000');
+        await this.page.goto(redirectUri);
     }
 
     // getContentsOf returns contents of element for provided selector.

@@ -1,3 +1,6 @@
+// Configure maximum timeout for tests.
+jest.setTimeout(10000);
+
 require('../models/User');
 
 const mongoose = require('mongoose');
