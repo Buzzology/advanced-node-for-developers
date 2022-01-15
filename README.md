@@ -1,2 +1,2 @@
 # AdvancedNodeStarter
-Starting project for a course on Advanced Node @ Udemy: https://github.com/StephenGrider/AdvancedNodeStarter
+Udemy crash course in Node: https://github.com/StephenGrider/AdvancedNodeStarter
